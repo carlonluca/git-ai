@@ -25,8 +25,8 @@ stages:
 Build:
   stage: build
   image:
-    name: rust:1.93-alpine
+    name: rust:1.93-trixie
   script:
-    - apk update
-    - apk add pkgconf libssl3
+    - apt update
+    - apt install -y pkg-config libssl-dev
     - cargo build
