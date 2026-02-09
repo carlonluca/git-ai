@@ -16,20 +16,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-pub mod gacli;
-pub mod gagit;
-
 use clap::Parser;
-use log::info;
 
-fn main() {
-    env_logger::init();
-
-    let args = gacli::GACli::parse();
-    match args.cmd.as_str() {
-        "gen-commit-msg" => {
-            info!("{}", gagit::GAGit::read_staged().unwrap());
-        }
-        _ => {}
-    }
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+pub struct GACli {
+   pub cmd: String
 }
