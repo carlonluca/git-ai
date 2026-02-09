@@ -16,7 +16,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-struct GAOllama {
-   model: String,
-   query: String
+use reqwest::Client;
+use serde_json::json;
+
+pub struct GAOllama {
+   pub model: String,
+   pub query: String
+}
+
+impl GAOllama {
+   pub async fn query() -> Option<String> {
+      let client = Client::new();
+
+      let payload = json!({
+         "model": "qwen3-coder-next",
+         "prompt": "What is your name?"
+      });
+
+      let response = client
+         .post("http://localhost:11434/api/generate")
+         .json(&payload)
+         .send()
+         .await
+         .ok()?
+         .text()
+         .await
+         .ok()?;
+
+      Some(response)
+   }
 }

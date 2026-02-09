@@ -18,18 +18,25 @@
 
 pub mod gacli;
 pub mod gagit;
+pub mod gaollama;
 
 use clap::Parser;
 use log::info;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     env_logger::init();
 
     let args = gacli::GACli::parse();
+    let mut response: Option<String> = None;
     match args.cmd.as_str() {
         "gen-commit-msg" => {
             info!("{}", gagit::GAGit::read_staged().unwrap());
+            response = gagit::GAGit::read_staged();
         }
         _ => {}
     }
+
+    let ollama = gaollama::GAOllama::query().await;
+    info!("{}", ollama.unwrap());
 }
