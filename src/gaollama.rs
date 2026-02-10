@@ -25,12 +25,17 @@ pub struct GAOllama {
 }
 
 impl GAOllama {
-   pub async fn query() -> Option<String> {
-      let client = Client::new();
+   pub async fn query_gen_commit_msg(patch: String) -> Option<String> {
+      let prompt = format!(r#"
+You are a tool that generates Git commit messages.
+Output ONLY the commit message text.
+Do not include explanations, confirmations, or any additional text:
+{patch}"#);
 
+      let client = Client::new();
       let payload = json!({
          "model": "qwen3-coder-next",
-         "prompt": "What is your name?"
+         "prompt": prompt
       });
 
       let response = client

@@ -28,15 +28,13 @@ async fn main() {
     env_logger::init();
 
     let args = gacli::GACli::parse();
-    let mut response: Option<String> = None;
     match args.cmd.as_str() {
         "gen-commit-msg" => {
             info!("{}", gagit::GAGit::read_staged().unwrap());
-            response = gagit::GAGit::read_staged();
+            let response = gagit::GAGit::read_staged();
+            let ollama = gaollama::GAOllama::query_gen_commit_msg(response.unwrap()).await;
+            info!("{}", ollama.unwrap());
         }
         _ => {}
     }
-
-    let ollama = gaollama::GAOllama::query().await;
-    info!("{}", ollama.unwrap());
 }
