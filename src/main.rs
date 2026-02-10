@@ -21,7 +21,7 @@ pub mod gagit;
 pub mod gaollama;
 
 use clap::Parser;
-use log::info;
+use log::{info, warn};
 
 #[tokio::main]
 async fn main() {
@@ -32,7 +32,16 @@ async fn main() {
         "gen-commit-msg" => {
             info!("{}", gagit::GAGit::read_staged().unwrap());
             let response = gagit::GAGit::read_staged();
-            let ollama = gaollama::GAOllama::query_gen_commit_msg(response.unwrap()).await;
+            if response.is_none() {
+                return;
+            }
+            let response = response.unwrap();
+            let response = response.trim();
+            if response.is_empty() {
+                warn!("No staged changes");
+                return;
+            }
+            let ollama = gaollama::GAOllama::query_gen_commit_msg(response).await;
             info!("{}", ollama.unwrap());
         }
         _ => {}

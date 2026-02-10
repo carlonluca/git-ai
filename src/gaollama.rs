@@ -34,7 +34,7 @@ pub struct GAOllama {
 }
 
 impl GAOllama {
-   pub async fn query_gen_commit_msg(patch: String) -> Option<String> {
+   pub async fn query_gen_commit_msg(patch: &str) -> Option<String> {
       let prompt = format!(r#"
 You are a tool that generates Git commit messages.
 Output ONLY the commit message text.
