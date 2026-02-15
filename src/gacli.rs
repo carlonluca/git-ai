@@ -1,5 +1,5 @@
 /*
- * This file is part of git-ai.
+ * This file is part of git-think.
  *
  * Copyright (c) 2026 Luca Carlon
  *
@@ -21,5 +21,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 pub struct GACli {
-   pub cmd: String
+   pub cmd: String,
+   #[arg(short = 'm', long = "llm", env = "GT_LLM")]
+   pub model: String
 }

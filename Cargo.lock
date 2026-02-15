@@ -450,7 +450,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "git-ai"
+name = "git-think"
 version = "0.1.0"
 dependencies = [
  "clap",

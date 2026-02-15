@@ -1,5 +1,5 @@
 /*
-* This file is part of git-ai.
+* This file is part of git-think.
 *
 * Copyright (c) 2026 Luca Carlon
 *
@@ -34,7 +34,7 @@ pub struct GAOllama {
 }
 
 impl GAOllama {
-   pub async fn query_gen_commit_msg(patch: &str) -> Option<String> {
+   pub async fn query_gen_commit_msg(llm: &str, patch: &str) -> Option<String> {
       let prompt = format!(r#"
 You are a tool that generates Git commit messages.
 Output ONLY the commit message text.
@@ -43,7 +43,7 @@ Do not include explanations, confirmations, or any additional text:
 
       let client = Client::new();
       let payload = json!({
-         "model": "qwen3-coder-next",
+         "model": llm,
          "prompt": prompt
       });
 

@@ -1,5 +1,5 @@
 /*
- * This file is part of git-ai.
+ * This file is part of git-think.
  *
  * Copyright (c) 2026 Luca Carlon
  *
@@ -40,7 +40,7 @@ async fn main() {
                 warn!("No staged changes");
                 return;
             }
-            let ollama = gaollama::GAOllama::query_gen_commit_msg(response).await;
+            let ollama = gaollama::GAOllama::query_gen_commit_msg(&args.model, response).await;
             info!("{}", ollama.unwrap());
         }
         _ => {}
