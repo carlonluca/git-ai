@@ -30,7 +30,6 @@ async fn main() {
     let args = gacli::GACli::parse();
     match args.cmd.as_str() {
         "gen-commit-msg" => {
-            info!("{}", gagit::GAGit::read_staged().unwrap());
             let response = gagit::GAGit::read_staged();
             if response.is_none() {
                 return;
