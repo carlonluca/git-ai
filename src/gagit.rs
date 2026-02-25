@@ -31,7 +31,7 @@ impl GAGit {
             warn!("Could not find repo: {:?}", e.message());
             return None
          },
-         Ok(v) => {
+         Ok(_v) => {
             info!("Repo found");
          }
       };
@@ -69,13 +69,22 @@ impl GAGit {
       
       let mut ret = String::new();
       let _ = diff.print(git2::DiffFormat::Patch, |_delta, _hunk, line| {
-         info!("{}", std::str::from_utf8(line.content()).unwrap());
-         match std::str::from_utf8(line.content()) {
-            Err(_) => {},
-            Ok(v) => ret += v
-         };
+         if let Ok(v) = std::str::from_utf8(line.content()) {
+            match line.origin() {
+               '+' | '-' | ' ' => {
+                  ret.push(line.origin());
+                  ret.push_str(v);
+               }
+               _ => {
+                  // headers, hunks, file markers
+                  ret.push_str(v);
+               }
+            }
+         }
          true
       });
+
+      info!("Diff:\n{}", ret);
 
       return Some(ret)
    }

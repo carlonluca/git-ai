@@ -44,7 +44,11 @@ Do not include explanations, confirmations, or any additional text:
       let client = Client::new();
       let payload = json!({
          "model": llm,
-         "prompt": prompt
+         "prompt": prompt,
+         "options": {
+            "temperature": 0,
+            "num_thread": 12
+         }
       });
 
       let resp = client

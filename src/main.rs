@@ -21,7 +21,7 @@ pub mod gagit;
 pub mod gaollama;
 
 use clap::Parser;
-use log::{info, warn};
+use log::warn;
 
 #[tokio::main]
 async fn main() {
@@ -41,7 +41,7 @@ async fn main() {
                 return;
             }
             let ollama = gaollama::GAOllama::query_gen_commit_msg(&args.model, response).await;
-            info!("{}", ollama.unwrap());
+            println!("{}", ollama.unwrap());
         }
         _ => {}
     }
