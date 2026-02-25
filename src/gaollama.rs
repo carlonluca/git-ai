@@ -34,11 +34,10 @@ pub struct GAOllama {
 }
 
 impl GAOllama {
-   pub async fn query_gen_commit_msg(llm: &str, patch: &str) -> Option<String> {
+   pub async fn query_gen_commit_msg(llm: &str, patch: &str, threads: u16) -> Option<String> {
       let prompt = format!(r#"
-You are a tool that generates Git commit messages.
 Output ONLY the commit message text.
-Do not include explanations, confirmations, or any additional text:
+Do not include explanations, confirmations, or any additional text. This is the patch:\n
 {patch}"#);
 
       let client = Client::new();
@@ -47,7 +46,7 @@ Do not include explanations, confirmations, or any additional text:
          "prompt": prompt,
          "options": {
             "temperature": 0,
-            "num_thread": 12
+            "num_thread": threads
          }
       });
 

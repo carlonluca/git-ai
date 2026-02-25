@@ -23,5 +23,7 @@ use clap::Parser;
 pub struct GACli {
    pub cmd: String,
    #[arg(short = 'm', long = "llm", env = "GT_LLM")]
-   pub model: String
+   pub model: String,
+   #[arg(short = 't', long = "threads", env = "GT_THREADS")]
+   pub threads: u16
 }

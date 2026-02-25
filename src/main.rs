@@ -40,7 +40,7 @@ async fn main() {
                 warn!("No staged changes");
                 return;
             }
-            let ollama = gaollama::GAOllama::query_gen_commit_msg(&args.model, response).await;
+            let ollama = gaollama::GAOllama::query_gen_commit_msg(&args.model, response, args.threads).await;
             println!("{}", ollama.unwrap());
         }
         _ => {}
